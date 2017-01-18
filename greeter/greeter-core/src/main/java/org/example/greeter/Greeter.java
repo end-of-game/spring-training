@@ -1,9 +1,16 @@
 package org.example.greeter;
 
+import java.util.List;
+
 import org.example.greeting.Greeting;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 
 public class Greeter {
+	@Autowired
 	private Greeting greeting;
+	
+	private int times = 1;
 	
 	public Greeting getGreeting() {
 		return greeting;
@@ -13,7 +20,23 @@ public class Greeter {
 		this.greeting = greeting;
 	}
 	
+	public void setTimes(int times) {
+		this.times = times;
+	}
+	
+	public void setSomeList(List<String> someStuff) {
+		System.out.println(String.join(", ", someStuff));
+	}
+	
 	public String greet(String name) {
-		return String.format("%s, %s!", greeting.getGreeting(), name);
+		StringBuilder sb = new StringBuilder();
+		for (int i = 0; i < times; i++) {
+			sb.append(String.format("%s, %s!%n", greeting.getGreeting(), name));
+		}
+		return sb.toString();
+	}
+	
+	public void greet() {
+		System.out.println(greet("World"));
 	}
 }

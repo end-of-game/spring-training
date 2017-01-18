@@ -8,6 +8,7 @@ import javax.inject.Named;
 import org.example.greeter.Greeter;
 import org.example.greeting.Greeting;
 import org.junit.Assert;
+import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
@@ -25,6 +26,7 @@ public class PrototypeScopeTest {
 	@Named("greeter2")
 	private Greeter greeter2;
 	
+	@Test
 	public void test() {
 		Greeting greeting1 = greeter1.getGreeting();
 		Greeting greeting2 = greeter2.getGreeting();
