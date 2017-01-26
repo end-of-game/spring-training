@@ -3,7 +3,9 @@
  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
  xmlns:p="http://www.springframework.org/schema/p"
  xmlns:util="http://www.springframework.org/schema/util"
+ xmlns:context="http://www.springframework.org/schema/context"
  xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-4.3.xsd
 		http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util-4.3.xsd">
     <bean id="greeting" class="org.example.greeting.HelloGreeting"/>
     
@@ -11,18 +13,12 @@
         <value>qmokzd</value>
         <value>mijijef</value>
     </util:list>
-        
-    <beans profile="dev !prod">
-        <bean class="org.example.greeter.Greeter"
-        p:times="3"
+    
+    <bean id="greeter" class="org.example.greeter.Greeter"
         p:greeting-ref="greeting"
         p:someList-ref="l"
-        scope="prototype"/>
-    </beans>
-    <beans profile="prod">
-        <bean class="org.example.greeter.Greeter"
-        p:times="5"
-        p:greeting-ref="greeting"
-        p:someList-ref="l"/>
-    </beans>
+        p:times="${times}">
+    </bean>
+    
+    <context:property-placeholder location="classpath*:config.properties"/>
 </beans>

@@ -5,11 +5,13 @@ import java.util.List;
 import org.example.greeting.Greeting;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 
 public class Greeter {
 	@Autowired
 	private Greeting greeting;
 	
+	@Value("${times}")
 	private int times = 1;
 	
 	public Greeting getGreeting() {

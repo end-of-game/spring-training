@@ -2,6 +2,10 @@ package org.example.organizer.model;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class Event {
 	private Long id;
 	private String description;
@@ -66,5 +70,38 @@ public class Event {
 		if (beginDateTime != null && endDateTime.isBefore(beginDateTime)) {
 			this.beginDateTime = endDateTime;
 		}
+	}
+	
+	@Override
+	public int hashCode() {
+		return new HashCodeBuilder()
+				.append(description)
+				.append(beginDateTime)
+				.append(endDateTime)
+				.toHashCode();
+	}
+	
+	@Override
+	public boolean equals(Object obj) {
+		if (obj == null) {
+			return false;
+		}
+		if (obj == this) {
+			return true;
+		}
+		if (!(obj instanceof Event)) {
+			return false;
+		}
+		Event other = (Event) obj;
+		return new EqualsBuilder()
+				.append(this.description, other.description)
+				.append(this.beginDateTime, other.beginDateTime)
+				.append(this.endDateTime, other.endDateTime)
+				.isEquals();
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
 	}
 }
