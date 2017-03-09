@@ -2,6 +2,10 @@ package org.example.organizer.model;
 
 import java.time.LocalDateTime;
 
+import org.apache.commons.lang.builder.EqualsBuilder;
+import org.apache.commons.lang.builder.HashCodeBuilder;
+import org.apache.commons.lang.builder.ToStringBuilder;
+
 public class Task {
 	private Long id;
 	private String description;
@@ -44,4 +48,18 @@ public class Task {
 		this.dueDateTime = dueDateTime;
 	}
 	
+	@Override
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
+	}
+	
+	@Override
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
+	}
+	
+	@Override
+	public String toString() {
+		return ToStringBuilder.reflectionToString(this);
+	}
 }

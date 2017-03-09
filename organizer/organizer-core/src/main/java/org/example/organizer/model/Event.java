@@ -8,8 +8,11 @@ import org.apache.commons.lang.builder.ToStringBuilder;
 
 public class Event {
 	private Long id;
+	
 	private String description;
+	
 	private LocalDateTime beginDateTime;
+	
 	private LocalDateTime endDateTime;
 	
 	protected Event() {}
@@ -73,31 +76,13 @@ public class Event {
 	}
 	
 	@Override
-	public int hashCode() {
-		return new HashCodeBuilder()
-				.append(description)
-				.append(beginDateTime)
-				.append(endDateTime)
-				.toHashCode();
+	public boolean equals(Object obj) {
+		return EqualsBuilder.reflectionEquals(this, obj);
 	}
 	
 	@Override
-	public boolean equals(Object obj) {
-		if (obj == null) {
-			return false;
-		}
-		if (obj == this) {
-			return true;
-		}
-		if (!(obj instanceof Event)) {
-			return false;
-		}
-		Event other = (Event) obj;
-		return new EqualsBuilder()
-				.append(this.description, other.description)
-				.append(this.beginDateTime, other.beginDateTime)
-				.append(this.endDateTime, other.endDateTime)
-				.isEquals();
+	public int hashCode() {
+		return HashCodeBuilder.reflectionHashCode(this);
 	}
 	
 	@Override
