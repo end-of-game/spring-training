@@ -8,8 +8,11 @@
         <id name="id">
             <generator class="native"/>
         </id>
-        <property name="description"/>
+        <property name="description" column="DESC"/>
         <property name="beginDateTime"/>
         <property name="endDateTime"/>
+        <join table="EVENT2">
+            <key/>
+        </join>
     </class>
 </hibernate-mapping>

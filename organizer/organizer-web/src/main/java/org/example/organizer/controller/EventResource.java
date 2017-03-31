@@ -5,14 +5,16 @@ import java.util.Map;
 
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Pattern;
+import javax.xml.bind.annotation.XmlRootElement;
 
 import org.example.organizer.model.Event;
 
+@XmlRootElement
 public class EventResource {
 	private static final String DATE_TIME_REGEXP = "[0-9]{4}-[0-9]{2}-[0-9]{2}T[0-9]{2}:[0-9]{2}:[0-9]{2}";
 
-	@NotNull(message = "not.empty")
-	@Pattern(regexp = "^.*\\S.*$", message = "not.empty")
+	@NotNull(message = "{not.empty}")
+	@Pattern(regexp = "^.*\\S.*$", message = "{not.empty}")
 	private String description;
 	
 	@NotNull(message = "{not.empty}")

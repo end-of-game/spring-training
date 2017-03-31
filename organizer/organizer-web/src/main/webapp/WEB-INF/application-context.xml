@@ -15,13 +15,23 @@
     <context:property-placeholder location="classpath:/database.properties"/>
     <jpa:repositories base-package="org.example.organizer.repository"/>
     
-    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver"
-        p:prefix="/WEB-INF/views/"
-        p:suffix=".jsp">
+    <bean id="viewResolver" class="org.thymeleaf.spring4.view.ThymeleafViewResolver"
+        p:order="1">
+        <property name="templateEngine">
+            <bean class="org.thymeleaf.spring4.SpringTemplateEngine"
+                p:messageSource-ref="messageSource">
+                <property name="templateResolver">
+                    <bean class="org.thymeleaf.templateresolver.ServletContextTemplateResolver"
+                        p:prefix="/WEB-INF/views/"
+                        p:suffix=".html"
+                        p:templateMode="HTML5"/>
+                </property>
+            </bean>
+        </property>
     </bean>
     
     <bean id="messageSource" class="org.springframework.context.support.ResourceBundleMessageSource"
-        p:basename="validation"/>
+        p:basename="messages"/>
         
     <bean id="validator" class="org.springframework.validation.beanvalidation.LocalValidatorFactoryBean"
         p:validationMessageSource-ref="messageSource">

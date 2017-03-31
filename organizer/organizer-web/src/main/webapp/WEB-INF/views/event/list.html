@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:th="http://www.thymeleaf.org">
+<head>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8"/>
+<title>My Events</title>
+</head>
+<body>
+    <h1>My Events</h1>
+    
+    <table>
+        <tr>
+            <th th:text="#{event.description.header}">Description</th>
+            <th th:text="#{event.description.begin}">Begin</th>
+            <th th:text="#{event.description.end}">End</th>
+        </tr>
+        <tr th:each="event : ${events}">
+            <td th:text="${event.description}">Dentist</td>
+            <td th:text="${event.beginDateTime}">2017-01-01T16:00:00</td>
+            <td th:test="${event.endDateTime}">2017-01-01T16:00:00</td>
+            <td><form th:action="${event.links['delete']}" method="post"><input type="submit" value="delete"/></form></td>
+        </tr>
+    </table>
+    
+    <p th:if="true">OK</p>
+    
+    <p th:unless="true">KO</p>
+    
+    <p th:switch="BOO">
+        <span th:case="BOO">BOO</span>
+        <span th:case="FAR">FAR</span>
+    </p>
+    
+    <h2>Create a new event</h2>
+    
+    <form th:action="@{/events}" method="post" th:object="${event}">
+        <p>Description: <input type="text" th:field="*{description}"/> <span th:errors="*{description}"></span></p>
+        <p>Begin: <input type="datetime" th:field="*{beginDateTime}"/> <span th:errors="*{beginDateTime}"></span></p>
+        <p>End: <input type="datetime" th:field="*{endDateTime}"/> <span th:errors="*{endDateTime}"></span></p>
+        <p><input type="submit" value="OK"/></p>
+    </form>
+    
+    <footer th:replace="footer :: copy(${company})"></footer>
+</body>
+</html>

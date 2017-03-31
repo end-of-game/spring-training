@@ -1,19 +1,39 @@
 package org.example.organizer.model;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
+
+import javax.persistence.CascadeType;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 
 import org.apache.commons.lang.builder.EqualsBuilder;
 import org.apache.commons.lang.builder.HashCodeBuilder;
 import org.apache.commons.lang.builder.ToStringBuilder;
 
+@Entity
 public class Event {
+	@Id
+	@GeneratedValue
 	private Long id;
 	
 	private String description;
-	
+
 	private LocalDateTime beginDateTime;
 	
 	private LocalDateTime endDateTime;
+	
+	@ManyToMany(cascade = { CascadeType.MERGE, CascadeType.PERSIST })
+	@JoinTable(
+			joinColumns = @JoinColumn(name = "EVENT_ID"),
+			inverseJoinColumns = @JoinColumn(name = "PERSON_ID"))
+	private List<Person> participants = new ArrayList<>();
 	
 	protected Event() {}
 	
@@ -73,6 +93,20 @@ public class Event {
 		if (beginDateTime != null && endDateTime.isBefore(beginDateTime)) {
 			this.beginDateTime = endDateTime;
 		}
+	}
+	
+	public List<Person> getParticipants() {
+		return Collections.unmodifiableList(participants);
+	}
+	
+	public void addParticipant(Person person) {
+		participants.add(person);
+		person.addParticipatingEvent(this);
+	}
+	
+	public void removeParticipant(Person person) {
+		participants.remove(person);
+		person.removeParticipatingEvent(this);
 	}
 	
 	@Override

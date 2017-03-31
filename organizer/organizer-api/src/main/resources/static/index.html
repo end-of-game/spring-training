@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>Insert title here</title>
+<script src="/webjars/jquery/dist/jquery.js"></script>
+<script src="/webjars/traverson/browser/dist/traverson.js"></script>
+<script src="/webjars/traverson-hal/browser/dist/traverson-hal.js"></script>
+</head>
+<body>
+
+<script>
+traverson.registerMediaType(TraversonJsonHalAdapter.mediaType, TraversonJsonHalAdapter);
+
+function refresh() {
+	traverson.from("/")
+	   .jsonHal()
+	   .follow('events', 'event', 'events')
+	   .withTemplateParameters({id: 1})
+	   .getResource(function(error, data) {
+		   if (error) {
+			   console.log(error);
+			   return;
+		   }
+		   
+		   console.log(data);
+		   
+// 		   var p = $('<p></p>').text(data.description+' ');
+//            var link = $('<a></a>').attr('href', data._links.self.href).text('go >')
+//            p.append(link);
+//            $('body').append(p);
+		   
+		   data._embedded.eventResourceList.forEach(function(event) {
+               var p = $('<p></p>').text(event.description+' ');
+               var link = $('<a></a>').attr('href', event._links.self.href).text('go >')
+               p.append(link);
+               $('body').append(p);
+           });
+	   });	
+}
+
+$(refresh);
+</script>
+</body>
+</html>

@@ -16,5 +16,6 @@
     <module>organizer-core</module>
     <module>organizer-cli</module>
     <module>organizer-web</module>
+    <module>organizer-api</module>
   </modules>
 </project>

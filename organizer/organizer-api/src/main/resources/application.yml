@@ -1,0 +1,28 @@
+spring:
+  jackson:
+    serialization:
+      write-dates-as-timestamps: false
+---
+logging:
+  level:
+    org.springframework: info
+    org.example: info
+spring:
+  profiles: prod
+  datasource:
+    url: jdbc:mysql:localhost/production
+    driver-class-name: com.mysql.jdbc.JDBCDriver
+---
+logging:
+  level:
+    org.springframework: info
+    org.example: debug
+    org.hibernate.SQL: debug
+spring:
+  profiles: dev
+  datasource:
+#    url: jdbc:h2:mem:testdb
+    url: jdbc:h2:file:~/test;DB_CLOSE_ON_EXIT=FALSE
+    username: sa
+    password: 
+    driver-class-name: org.h2.Driver
